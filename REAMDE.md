@@ -1,0 +1,5 @@
+
+
+```
+kustomization build .
+```
