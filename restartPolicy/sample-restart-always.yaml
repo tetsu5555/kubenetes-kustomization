@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-restart-always
+spec:
+  restartPolicy: Always # Podが停止すると常に再起動する
+  containers:
+    - name: nginx-container
+      image: nginx:1.12
+      command: ["sh", "-c", "exit 0"]
+      # command: ["sh", "-c", "exit 1"]
