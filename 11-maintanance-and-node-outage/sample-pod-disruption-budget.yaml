@@ -1,0 +1,10 @@
+apiVersion: policy/v1beta
+kind: PodDisruptionBudget
+metadata:
+  name: sample-pod-disruption-budget
+spec:
+  minAvailable: 1
+  maxunavailable: 1
+  selector:
+    matchLabels:
+      app: sample-app
