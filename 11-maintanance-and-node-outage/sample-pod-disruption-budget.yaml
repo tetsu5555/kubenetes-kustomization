@@ -6,5 +6,5 @@ spec:
   minAvailable: 1
   maxunavailable: 1
   selector:
-    matchLabels:
+    matchLabels: # ラベルにマッチしたPodに関してチェックを行う
       app: sample-app
