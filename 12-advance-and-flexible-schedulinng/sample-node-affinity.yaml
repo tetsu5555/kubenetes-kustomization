@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-node-affinity
+spec:
+  affinity:
+    nodeAffinity:
+      # 必須のスケジューリングポリシー
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: disktype
+              operator: In
+              values:
+                - ssd
+      # 優先的に考慮されるスケジューリングポリシー
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: kubernetes.io/hostname # これなんだろ？→ビルトインラベルに kubernetes.io/hostnameってのがあるみたい
+                operator: In
+                values:
+                  - docker-desktop
+  containers:
+    - name: nginx-container
+      image: nginx:1.12
