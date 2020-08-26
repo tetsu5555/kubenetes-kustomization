@@ -45,7 +45,7 @@ kubectl describe pod sample-healthckeck | egrep "Liveness|Readiness"
 
 ```
 kubeclt apply -f sample-liveness.yaml
-kubectl get pods sample-livenss --watch
+kubectl get pods sample-liveness --watch
 
 # liveness probeが失敗し、restartPolicyに従ってコンテナの再起動が行われる
 kubectl exec -it sample-liveness -- rm /usr/share/nginx/html/index.html
