@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-liveness
+  labels:
+    app: sample-app
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:1.12
+      ports:
+        - containerPort: 80
+      livenessProbe:
+        httpGet:
+          path: /index.html
+          port: 80
+          scheme: HTTP
+        timeoutSeconds: 1 # タイムアウトまでの秒数
+        successThreshold: 1 # 成功と判断するまでのチェック回数
+        failureThreshold: 2 # 2回ヘルスチェックが失敗すると再起動する
+        initialDelaySeconds: 5 # 初回ヘルスチェック開始まで5秒遅延させる
+        periodSeconds: 3 # 3秒間隔でチェックする
