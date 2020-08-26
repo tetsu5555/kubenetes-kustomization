@@ -1,6 +1,6 @@
 ## リソースを削除した時の挙動
 - KubenetesではReplicasetなどの親リソースが削除された際には、子リソースとなるPodなどを削除するためにガベージコレクションを行う
-- metadataa.ownerReference
+- metadata.ownerReference
   - ReplicastなどではPodを作成していくが、作成されたPodにはどのReplicasetから作成されたかを判別するためにmetadataa.ownerReference以下に自動的に情報が保存されている
 
 ### Replicasetを削除した時の挙動（3パターン）
