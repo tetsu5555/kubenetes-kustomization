@@ -1,10 +1,11 @@
 ### 高度なスケジューリングとAffinity / Anti-Affinity
 リソースにラベルをつける、それを用いて様々なマネジメントを行う。スケジューリングもNodeやPodのラベルを使うことで実現する。
 
-Affinity
-- 特定の条件に一致するところにスケジューリングする
-Anti-Affinity
-- 特定の条件に一致しないところにスケジューリングする
+AffinityとAnti-Affinityという概念
+- Affinity
+  - 特定の条件に一致するところにスケジューリングする
+- Anti-Affinity
+  - 特定の条件に一致しないところにスケジューリングする
 
 Kubenetesのスケジューリング
 - Podのスケジューリング時に特定のNodeを選択する方法（5種類）
@@ -13,7 +14,7 @@ Kubenetesのスケジューリング
   - Node Affinity
     - 特定のノード上だけで実行する
   - Node Anti-Affinity
-    - 特定のノード上だけで実行する
+    - 特定のノード以外の上だけで実行する
   - Inter-Pod Affinity
     - 特定のPodがいるドメイン(ノード、ゾーン、etc)上で実行する
   - Inter-Pod Anti-Affinity
@@ -30,6 +31,7 @@ Kubenetesのスケジューリング
 - 手動でノードにラベルを追加することも可能
 
 ```
+# ラベルを確認
 kubectl get nodes -o json | jq ".items[] | .metadata.labels"
 kubectl label node docker-desktop disktype=ssd cputype=low disksize=200
 
@@ -49,3 +51,80 @@ kubectl get pods sample-nodeselector -o wid
 
 ### Node Affinity
 Podを特定のノード上へスケジューリングするポリシー
+
+requiredDuringSchedulingIgnoredDuringExecution
+  - 必須スケジューリングポリシー
+  - この条件を満たさないノードにはスケジューリングされない
+preferredDuringSchedulingIgnoreedDuringExecution
+  - 優先的に考慮されるスケジューリングポリシー
+  - あくまでも優先的にスケジューリングを行うだけなので、ノードが停止状態などの場合にはrequiredDuringSchedulingIgnordDuringExecutionが満たされていれば、スケジューリングされる
+  - 優先度の重みと条件のペアを複数持つ
+
+nodeSelectorTerm
+- どういったノードがスケジューリング可能なノードかを定義
+- 配列なので、複数指定可能 → OR条件
+- matchExpressionsはAND条件
+
+↓の例の場合(A and B) or (C and D)にスケジューリングされる
+
+```
+nodeSelectorTerm:
+- matchExpressions:
+  - A
+  - B
+- matchExpressions:
+  - C
+  - D
+```
+
+```
+# (disktype=hdd and cputype=high) or (disktype=ssd and cputype=low)
+requiredDuringSchedulingIgnoredDuringExecution:
+  nodeSelectorTerms:
+    - matchExpressions:
+      - key: disktype
+        operator: In
+        values:
+          - hdd
+      - key: cputype
+        operator: In
+        values:
+          - low
+    - matchExpressions:
+      - key: disktype
+        operator: In
+        values:
+          - ssd
+      - key: cputype
+        operator: In
+        values:
+          - high
+```
+
+(A and B)が重み1、 (C and D)が重み2の優先度でスケジューリングを行う
+
+```
+preferredDuringSchedulingIgnoredDuringExecution
+  - weight: 1
+    preference:
+      matchExpressions:
+        - key: disktype
+          operator: In
+          values:
+            - hdd
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+            - docker-desktop
+  - weight: 2
+    preference:
+      matchExpressions:
+        - key: disktype
+          operator: In
+          values:
+            - hdd
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+            - docker-desktop
+```

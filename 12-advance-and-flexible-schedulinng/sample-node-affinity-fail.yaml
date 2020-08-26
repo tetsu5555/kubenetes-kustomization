@@ -6,7 +6,7 @@ spec:
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
+        nodeSelectorTerms: # どういったノードがスケジューリング可能なノードかを定義
           - matchExpressions:
             - key: disktype
               operator: In

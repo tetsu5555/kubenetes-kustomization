@@ -1,0 +1,2 @@
+## PersistentVolumeClaim
+永続化領域を利用する為のリソース
