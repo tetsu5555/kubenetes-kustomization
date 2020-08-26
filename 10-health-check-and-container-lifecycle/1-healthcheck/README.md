@@ -63,4 +63,6 @@ kubectl exec -it sample-readiness -- rm /usr/share/nginx/html/50x.html
 
 # Readiness Probeが成功するようになる
 kubectl exec -it sample-readiness -- touch /usr/share/nginx/html/50x.html
+
+kubectl describe pod sample-readiness
 ```
