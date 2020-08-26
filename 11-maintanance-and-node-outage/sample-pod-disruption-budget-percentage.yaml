@@ -1,0 +1,10 @@
+apiVersion: policy/v1beta
+kind: PodDisruptionBudget
+metadata:
+  name: sample-pod-disruption-budget-percentage
+spec: # %でも指定できる
+  minAvailable: 90%
+  maxUnavailable: 10%
+  selector:
+      matchLabels:
+        app: sample-app
