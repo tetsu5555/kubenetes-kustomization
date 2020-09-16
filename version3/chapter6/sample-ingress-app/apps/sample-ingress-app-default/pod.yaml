@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-ingress-default
+  labels:
+    ingress-app: default
+spec:
+  containers:
+  - name: nginx-container
+    image: amsy810/echo-nginx:v2.0

@@ -1,0 +1,4 @@
+resources:
+- sample-ingress-app1
+- sample-ingress-app2
+- sample-ingress-app-default

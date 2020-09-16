@@ -1,0 +1,4 @@
+commonLabels:
+  app: my-wordpress
+bases:
+- ./apps
