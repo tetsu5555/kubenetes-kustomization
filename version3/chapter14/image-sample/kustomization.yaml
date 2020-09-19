@@ -1,0 +1,7 @@
+images:
+- name: nginx # nameがマッチするイメージは全て置換される
+  newName: amsy810/echo-nginx # 置き換えるimage名
+  newTag: v2.0 # イメージのtag
+resources:
+- sample-deployment.yaml
+- sample-lb.yaml
