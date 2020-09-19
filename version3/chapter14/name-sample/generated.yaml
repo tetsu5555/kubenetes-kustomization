@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prefix-sample-lb-sufix # prefixとsuffixが付与されて、prefix-NAME-suffixになっている
+spec:
+  ports:
+  - name: http-port
+    nodePort: 30082
+    port: 8080
+    protocl: TCP
+    targetPort: 80
+  selector: sample-app
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prefix-sample-deployment-sufix # prefixとsuffixが付与されて、prefix-NAME-suffixになっている
+spce:
+  replicas: 3
+  selector:
+    matchlabels:
+      app: sample-app
+    template:
+      metadata:
+        labels:
+          app: sample-app
+      spec:
+        containers:
+        - image: nginx:1.16
+          name: nginx-container

@@ -1,0 +1,7 @@
+bases:
+- ../resources
+patchesStrategicMerge:
+- ./patch-replicas.yaml
+images:
+- name: nginx
+  newTag: production
