@@ -1,0 +1,9 @@
+resources:
+- sample-deployment.yaml
+- sample-lb.yaml
+configMapGenerator: # configMapを生成する
+- name: generated-configmap
+  literals:
+  - KEY1=VAL1
+  files:
+  - ./sample.txt
