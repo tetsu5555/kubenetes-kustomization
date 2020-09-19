@@ -1,0 +1,7 @@
+commonLabels: # labelを付与
+  label1: label1-val
+commonAnnotations: # annotationを付与
+  annotation1: annotaiton-val1
+resources:
+- sample-deployment.yaml
+- sample-lb.yaml
