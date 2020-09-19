@@ -1,6 +1,5 @@
-resources:
-- sample-deployment.yaml
-- sample-lb.yaml
+bases:
+- ../resources
 configMapGenerator: # configMapを生成する
 - name: generated-configmap
   literals:
