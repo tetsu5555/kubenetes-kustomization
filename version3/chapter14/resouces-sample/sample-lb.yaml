@@ -11,4 +11,4 @@ spec:
     targetPort: 80
     nodePort: 30082
   selector:
-    sample-app
+    app: sample-app
