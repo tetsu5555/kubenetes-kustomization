@@ -15,7 +15,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prefix-sample-deployment-sufix # # prefixとsuffixが付与されて、prefix-NAME-suffixになっている
+  name: prefix-sample-deployment-sufix # prefixとsuffixが付与されて、prefix-NAME-suffixになっている
 spce:
   replicas: 3
   selector:

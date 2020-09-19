@@ -1,5 +1,4 @@
 namePrefix: prefix-
 nameSuffix: -sufix
-resources:
-- sample-deployment.yaml
-- sample-lb.yaml
+bases:
+- ../resources
