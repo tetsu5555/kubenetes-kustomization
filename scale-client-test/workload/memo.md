@@ -2,10 +2,18 @@
 
 ```
 cd ./app
+
 # イメージを作成
 docker-compose up
+
 # manifestをapplyする
 kubectl apply -f deployment.yaml
+
+# podを確認
+kubectl get pod
+
+# ログを確認
+kubectl logs <manager pod name>
 ```
 
 コマンドメモ
