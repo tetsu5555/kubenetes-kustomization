@@ -8,34 +8,45 @@ const getPodNames = async () => {
   const names = res.body.items.map((item: any) => {
     return item.metadata.name
   })
-  console.log('[pod names]', names)
+  return names
 }
 
-let count = 2
+let count = 6
+let decrement = true
+const max = 7;
+const min = 7;
+
 const scale = async (namespace: string, name: string, replicas: number) => {
   const k8sApi = kc.makeApiClient(k8s.AppsV1Api);
   // find the particular deployment
   const res = await k8sApi.readNamespacedDeployment(name, namespace);
   let deployment = res.body;
-  // console.log('deployment', deployment)
 
   // edit
   deployment.spec.replicas = replicas;
 
   // replace
   await k8sApi.replaceNamespacedDeployment(name, namespace, deployment);
-
-  console.log(`pod scaled to ${count}`)
-  count++
 }
 
-
-
 const runManager = async () => {
-  await getPodNames()
+  const names = await getPodNames()
+
+  console.log('[pod names]', names)
+  count = names.length - 1
+  console.log(`[pod count] count: ${count}`)
+  if (count > 1 && decrement) {
+    count--
+    if (count === min) decrement = false
+  } else {
+    decrement = false
+    count ++
+    if (count === max) decrement = true
+  }
 
   const targetDeploymentName = 'scale-app-worker';
-  scale('default', targetDeploymentName, count);
+  console.log(`[log] scale pod to ${count}`)
+  await scale('default', targetDeploymentName, count);
 };
 
 const runMassPushV3Manager = async ({ interval_msec }: { interval_msec: number }) => {

@@ -26,7 +26,7 @@ kind: Deployment
 metadata:
   name: scale-app-worker
 spec:
-  replicas: 2
+  replicas: 6
   selector:
     matchLabels:
       app: scale-app-worker
