@@ -1,0 +1,4 @@
+commonLabels:
+  app: scale
+bases:
+- ./rbac
