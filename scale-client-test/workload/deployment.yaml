@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scale-app-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scale-app-manager
+  template:
+    metadata:
+      labels:
+        app: scale-app-manager
+    spec:
+      containers:
+        - name: scale-manager
+          image: app_manager
+          imagePullPolicy: IfNotPresent
+          command:
+          - npm
+          - run
+          - start:manager
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scale-app-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: scale-app-worker
+  template:
+    metadata:
+      labels:
+        app: scale-app-worker
+    spec:
+      containers:
+        - name: scale-worker
+          image: app_worker
+          imagePullPolicy: IfNotPresent
+          command:
+          - npm
+          - run
+          - start:worker
