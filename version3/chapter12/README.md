@@ -1,4 +1,4 @@
-x   ```
+```
 kubectl exec -it sample-serviceaccount-pod -- ls /var/run/secrets/kubernetes.io/serviceaccount
 
 apt update && apt -y install curl
