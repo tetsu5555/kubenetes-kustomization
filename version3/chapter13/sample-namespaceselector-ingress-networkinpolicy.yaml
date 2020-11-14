@@ -1,0 +1,21 @@
+# 特定のラベルを持つPodからの通信を許可
+apiVersion: networking.k8s.io/v1
+kind: NetworkingPolicy
+metadata:
+  name: sample-namespaceselector-ingress-networkingpolicy
+  namespace: nptest
+spec:
+  podSelector:
+    matchLabels:
+      app: np3
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    # namespaceを指定
+    - namespaceselector:
+        matchLabels:
+          ns: default
+    ports:
+    - protocol: TCP
+      port: 80

@@ -1,0 +1,14 @@
+# PodPresetの除外
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-preset-pod
+  # PodPresetの対象から除外するPodとして起動したい場合はannotationをつける
+  annotations:
+    podpreset.admission.kubernetes.io.exclude: "true"
+  labels:
+    app: podpreset
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx:1.16
