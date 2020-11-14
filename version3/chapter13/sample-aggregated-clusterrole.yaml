@@ -1,0 +1,36 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sub-clusterrole1
+  labels:
+    app: sample-rbac
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sub-clusterrole2
+  labels:
+    app: sample-rbac
+rules:
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sample-aggregated-clusterrole
+aggregationRule:
+  clusterRoleSelectors:
+  - matchLabels:
+      app: sample-rbac
+# 集約する側のルールは無視される
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get"]
