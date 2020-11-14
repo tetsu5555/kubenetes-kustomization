@@ -1,0 +1,15 @@
+# PodPresetの衝突
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-preset-fail-pod
+  labels:
+    app: podpreset
+  spec:
+    containers:
+    - name: nginx-container
+      image: nginx:1.16
+      # Podの定義と一つでも競合した場合、全ての書き換えが行われない
+      env:
+      - name: SAMPLE_ENV
+        value: CONFLICT_VALUE
