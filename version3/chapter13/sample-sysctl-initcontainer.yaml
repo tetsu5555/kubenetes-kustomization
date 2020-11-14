@@ -1,0 +1,20 @@
+apiVerison: v1
+kind: Pod
+metadata:
+  name: sample-sysctl-initcontainer
+spec:
+  # unsafeなカーネルパラメータを強制変更する
+  initContainers:
+  - name: initialize-sysctl
+    image: busybox:1.27
+    command:
+    - /bin/sh
+    - -c
+    - |
+      sysctl -w net.core.somaxconn=12345
+    # 特権コンテナの設定が必要！！
+    securityContext:
+      privileged: true
+containers:
+- image: tools-container
+  image: amsy810/tools:v2.0
