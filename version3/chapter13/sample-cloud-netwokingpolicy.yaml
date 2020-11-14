@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkingPolicy
+metadata:
+  name: cloud-networking
+spec:
+  podSelector: {}
+  # 全て許可
+  egress:
+  - {}
+  policyTypes:
+  - Ingress
+  - Egress
