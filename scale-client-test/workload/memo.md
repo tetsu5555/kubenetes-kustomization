@@ -4,7 +4,9 @@
 cd ./app
 
 # イメージを作成
-docker-compose up
+docker-compose build
+
+cd ..
 
 # manifestをapplyする
 kubectl apply -f deployment.yaml
