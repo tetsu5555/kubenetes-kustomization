@@ -3,3 +3,9 @@
 ```
 kustomization build .
 ```
+
+[kubeval](https://kubeval.instrumenta.dev/installation/)
+
+```
+kubeval <file>
+```
