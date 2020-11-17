@@ -12,6 +12,7 @@ spec:
       labels:
         app: scale-app-manager
     spec:
+      serviceAccountName: ksa-scale-cluster
       containers:
         - name: scale-manager
           image: app_manager
