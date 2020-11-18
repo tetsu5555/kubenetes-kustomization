@@ -4,11 +4,15 @@ kc.loadFromDefault();
 
 const targetDeploymentName = 'scale-app-worker';
 const nameSpace = 'default';
+const workerLabel = 'scale-app-worker';
 
 const getPodNames = async () => {
   const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-  const res = await k8sApi.listNamespacedPod(nameSpace);
-  const names = res.body.items.map((item: any) => {
+  const res = await k8sApi.listNamespacedPod(nameSpace, undefined, undefined, undefined, undefined, undefined);
+  const wokerPods = res.body.items.filter((item: any) => {
+    return item.metadata.labels.app === workerLabel
+  })
+  const names = wokerPods.map((item: any) => {
     return item.metadata.name
   })
   return names
@@ -33,7 +37,7 @@ const runManager = async () => {
   const names = await getPodNames()
 
   console.log('[pod names]', names)
-  count = names.length - 1
+  count = names.length
   console.log(`[pod count] count: ${count}`)
 
   // MINとMAXの間でpodを増減させる

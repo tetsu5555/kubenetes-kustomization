@@ -1,5 +1,5 @@
-commonLabels:
-  app: scale
+# commonLabels:
+#   app: scale
 bases:
 - ./rbac
 - ./workload

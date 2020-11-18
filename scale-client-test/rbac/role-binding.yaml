@@ -6,7 +6,8 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: scale-role
+  # 存在しないやつにしても動くのか
+  name: scale-role2
 subjects:
 - kind: ServiceAccount
   name: ksa-scale-cluster
