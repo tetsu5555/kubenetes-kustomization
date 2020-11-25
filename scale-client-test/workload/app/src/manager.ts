@@ -13,7 +13,7 @@ const getPodNames = async () => {
     return item.metadata.labels.app === workerLabel
   })
   const names = wokerPods.map((item: any) => {
-    return item.metadata.name
+    return `${item.metadata.name}: ${item.status.phase}`
   })
   return names
 }
@@ -51,6 +51,10 @@ const runManager = async () => {
   }
 
   console.log(`[log] scale pod to ${count}`)
+  if (count > 50) {
+    console.log(`[log] scale stopped count is ${count}`)
+    return;
+  }
   await scale(nameSpace, targetDeploymentName, count)
 };
 
