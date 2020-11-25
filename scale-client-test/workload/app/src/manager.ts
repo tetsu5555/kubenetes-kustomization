@@ -34,28 +34,32 @@ const scale = async (namespace: string, name: string, replicas: number) => {
 }
 
 const runManager = async () => {
-  const names = await getPodNames()
+  try {
+    const names = await getPodNames()
 
-  console.log('[pod names]', names)
-  count = names.length
-  console.log(`[pod count] ${count}`)
-  console.log('[decrement]', decrement)
+    console.log('[pod names]', names)
+    count = names.length
+    console.log(`[pod count] ${count}`)
+    console.log('[decrement]', decrement)
 
-  // MINとMAXの間でpodを増減させる
-  if (count > MIN && decrement) {
-    count--
-  } else {
-    decrement = false
-    count ++
-    if (count > MAX) decrement = true
+    // MINとMAXの間でpodを増減させる
+    if (count > MIN && decrement) {
+      count--
+    } else {
+      decrement = false
+      count ++
+      if (count > MAX) decrement = true
+    }
+
+    console.log(`[log] scale pod to ${count}`)
+    if (count > 50) {
+      console.log(`[log] scale stopped count is ${count}`)
+      return;
+    }
+    await scale(nameSpace, targetDeploymentName, count)  
+  } catch (error) {
+    console.error('[error]', error);
   }
-
-  console.log(`[log] scale pod to ${count}`)
-  if (count > 50) {
-    console.log(`[log] scale stopped count is ${count}`)
-    return;
-  }
-  await scale(nameSpace, targetDeploymentName, count)
 };
 
 const runMassPushV3Manager = async ({ interval_msec }: { interval_msec: number }) => {
