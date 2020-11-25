@@ -18,7 +18,7 @@ const getPodNames = async () => {
   return names
 }
 
-let count = 6
+let count = 1
 let decrement = true
 const MAX = 7
 const MIN = 1
@@ -38,7 +38,8 @@ const runManager = async () => {
 
   console.log('[pod names]', names)
   count = names.length
-  console.log(`[pod count] count: ${count}`)
+  console.log(`[pod count] ${count}`)
+  console.log('[decrement]', decrement)
 
   // MINとMAXの間でpodを増減させる
   if (count > MIN && decrement) {
@@ -46,7 +47,7 @@ const runManager = async () => {
   } else {
     decrement = false
     count ++
-    if (count === MAX) decrement = true
+    if (count > MAX) decrement = true
   }
 
   console.log(`[log] scale pod to ${count}`)

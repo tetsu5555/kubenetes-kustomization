@@ -9,6 +9,8 @@ x-service-default: &service
 services:
   worker:
     <<: *service
+    # 別イメージ用
+    # image: app_worker:new
     command: npm run start:worker
 
   manager:

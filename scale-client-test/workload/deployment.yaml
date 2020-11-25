@@ -27,7 +27,7 @@ kind: Deployment
 metadata:
   name: scale-app-worker
 spec:
-  replicas: 6
+  replicas: 1
   selector:
     matchLabels:
       app: scale-app-worker
@@ -38,9 +38,21 @@ spec:
     spec:
       containers:
         - name: scale-worker
-          image: app_worker
+          image: app_worker:new
           imagePullPolicy: IfNotPresent
           command:
           - npm
           - run
           - start:worker
+# ---
+# apiVersion: policy/v1beta1
+# kind: PodDisruptionBudget
+# metadata:
+#   labels:
+#     app: mass-push-v3-worker
+#   name: mass-push-v3-worker
+# spec:
+#   maxUnavailable: 1
+#   selector:
+#     matchLabels:
+#       app: mass-push-v3-worker
