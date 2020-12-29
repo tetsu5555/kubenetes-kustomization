@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: scale-worker
-          image: app_worker:new
+          image: app_worker
           imagePullPolicy: IfNotPresent
           command:
           - npm

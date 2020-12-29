@@ -20,7 +20,7 @@ const getPodNames = async () => {
 
 let count = 1
 let decrement = true
-const MAX = 7
+const MAX = 3
 const MIN = 1
 
 const scale = async (namespace: string, name: string, replicas: number) => {
@@ -56,7 +56,7 @@ const runManager = async () => {
       console.log(`[log] scale stopped count is ${count}`)
       return;
     }
-    await scale(nameSpace, targetDeploymentName, count)  
+    // await scale(nameSpace, targetDeploymentName, count)  
   } catch (error) {
     console.error('[error]', error);
   }
@@ -66,4 +66,4 @@ const runMassPushV3Manager = async ({ interval_msec }: { interval_msec: number }
   setInterval(runManager, interval_msec);
 };
 
-runMassPushV3Manager({ interval_msec: 5 * 1000 });
+runMassPushV3Manager({ interval_msec: 10 * 1000 });
